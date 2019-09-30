@@ -13,16 +13,15 @@ import com.mc.service.CategoriaService;
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
-	
+
 	@Autowired
 	private CategoriaService service;
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> find( @PathVariable Integer id) {
-		
-		Categoria categoria = service.buscar(id);
 
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> find(@PathVariable Integer id) {
+
+		Categoria categoria = service.buscar(id);
 		return ResponseEntity.ok(categoria);
-		
+
 	}
 }
