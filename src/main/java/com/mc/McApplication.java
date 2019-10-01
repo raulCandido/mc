@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mc.domain.Categoria;
 import com.mc.domain.Cidade;
+import com.mc.domain.Cliente;
+import com.mc.domain.Endereco;
 import com.mc.domain.Estado;
 import com.mc.domain.Produto;
+import com.mc.domain.enums.TipoCliente;
 import com.mc.repository.CategoriaRepository;
 import com.mc.repository.CidadeRepository;
+import com.mc.repository.ClienteRepository;
+import com.mc.repository.EnderecoRepository;
 import com.mc.repository.EstadoRepository;
 import com.mc.repository.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class McApplication implements CommandLineRunner {
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(McApplication.class, args);
@@ -56,11 +65,22 @@ public class McApplication implements CommandLineRunner {
 
 		est1.getCidades().addAll(Arrays.asList(cid1));
 		est2.getCidades().addAll(Arrays.asList(cid2,cid3));
+		
+		Cliente cli1 = new Cliente(null, "Taina de Souza", "taina.souza@gmail.com", "06235715399", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("996515305","996515306"));
+		
+		Endereco end1 = new Endereco(null, "Rua Rita Barbosa Lima", 48, "Proximo a mercadinho serve bem", "Jardim Icarai", "61621390", cli1, cid2);
+		Endereco end2 = new Endereco(null, "Rua Marcelino de Oliveira", 04, "Proximo a Nordeste Emergencia", "Jardim Icarai", "61621070", cli1, cid2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
+		
+		clienteRepository.save(cli1);
+		enderecoRepository.saveAll(Arrays.asList(end1, end2));
 	}
 
 }
