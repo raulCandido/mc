@@ -20,7 +20,7 @@ public abstract class Pagamento implements Serializable {
 	
 	@Id
 	private Integer id;
-	private EstadoPagamento estadoPagamento;
+	private Integer estadoPagamento;
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
@@ -33,7 +33,7 @@ public abstract class Pagamento implements Serializable {
 		super();
 		this.id = id;
 		this.pedido = pedido;
-		this.estadoPagamento = estadoPagamento;
+		this.estadoPagamento = estadoPagamento.getCodigo();
 	}
 
 	
@@ -71,11 +71,11 @@ public abstract class Pagamento implements Serializable {
 	}
 
 	public EstadoPagamento getEstadoPagamento() {
-		return estadoPagamento;
+		return EstadoPagamento.toEnum(estadoPagamento);
 	}
 
 	public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
-		this.estadoPagamento = estadoPagamento;
+		this.estadoPagamento = estadoPagamento.getCodigo();
 	}
 
 	public Pedido getPedido() {
