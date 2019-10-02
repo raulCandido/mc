@@ -13,6 +13,7 @@ import com.mc.domain.Cidade;
 import com.mc.domain.Cliente;
 import com.mc.domain.Endereco;
 import com.mc.domain.Estado;
+import com.mc.domain.ItemPedido;
 import com.mc.domain.Pagamento;
 import com.mc.domain.PagamentoComBoleto;
 import com.mc.domain.PagamentoComCartao;
@@ -99,6 +100,12 @@ public class McApplication implements CommandLineRunner {
 		
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped1, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
