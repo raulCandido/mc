@@ -1,6 +1,7 @@
 package com.mc.resource;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,13 @@ public class CategoriaResource {
 
 		Categoria categoria = service.find(id);
 		return ResponseEntity.ok(categoria);
+
+	}
+	@GetMapping(value = "/")
+	public ResponseEntity<?> findall() {
+
+		List<Categoria> categorias = service.findall();
+		return ResponseEntity.ok(categorias);
 
 	}
 

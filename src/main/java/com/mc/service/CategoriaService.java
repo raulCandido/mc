@@ -1,5 +1,6 @@
 package com.mc.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,9 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repository.save(obj);
+	}
+
+	public List<Categoria> findall() {
+		return repository.findAll();
 	}
 }
