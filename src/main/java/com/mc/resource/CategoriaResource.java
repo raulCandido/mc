@@ -1,7 +1,9 @@
 package com.mc.resource;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mc.domain.Categoria;
+import com.mc.dto.CategoriaDTO;
 import com.mc.service.CategoriaService;
 
 @RestController
@@ -33,11 +36,15 @@ public class CategoriaResource {
 
 	}
 
-	@GetMapping(value = "/")
-	public ResponseEntity<?> findall() {
-
+	@GetMapping()
+	public ResponseEntity<List<CategoriaDTO>> findall() {
 		List<Categoria> categorias = service.findall();
-		return ResponseEntity.ok(categorias);
+		List<CategoriaDTO> listDTO = categorias.stream().map(categoria -> new CategoriaDTO(categoria))
+				.collect(Collectors.toList());
+//		for (Categoria categoria : categorias) {
+//			listDTO.add(new CategoriaDTO(categoria));
+//		}
+		return ResponseEntity.ok(listDTO);
 
 	}
 
