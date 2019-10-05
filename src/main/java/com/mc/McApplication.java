@@ -3,8 +3,6 @@ package com.mc;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-import javax.annotation.processing.Messager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -66,13 +64,13 @@ public class McApplication implements CommandLineRunner {
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
+	
 	@Bean
 	public LocalValidatorFactoryBean getValidator() {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
 		bean.setValidationMessageSource(messageSource());
 		return bean;
 	}
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(McApplication.class, args);
@@ -151,8 +149,6 @@ public class McApplication implements CommandLineRunner {
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
 		
-		
-		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10, cat11, cat12, cat13, cat14, cat15, cat16, cat17));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
@@ -163,7 +159,6 @@ public class McApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
 		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
-		
 		
 	}
 
