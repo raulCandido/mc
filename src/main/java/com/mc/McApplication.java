@@ -3,10 +3,16 @@ package com.mc;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
+import javax.annotation.processing.Messager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.mc.domain.Categoria;
 import com.mc.domain.Cidade;
@@ -52,6 +58,20 @@ public class McApplication implements CommandLineRunner {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository ;
+	
+	@Bean
+	public MessageSource messageSource () {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:messages");
+		messageSource.setDefaultEncoding("UTF-8");
+		return messageSource;
+	}
+	@Bean
+	public LocalValidatorFactoryBean getValidator() {
+		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+		bean.setValidationMessageSource(messageSource());
+		return bean;
+	}
 
 
 	public static void main(String[] args) {
@@ -63,6 +83,22 @@ public class McApplication implements CommandLineRunner {
 
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Profissionais");
+		Categoria cat3 = new Categoria(null, "TESTE 01");
+		Categoria cat4 = new Categoria(null, "TESTE 02");
+		Categoria cat5 = new Categoria(null, "TESTE 03");
+		Categoria cat6 = new Categoria(null, "TESTE 04");
+		Categoria cat7 = new Categoria(null, "TESTE 05");
+		Categoria cat8 = new Categoria(null, "TESTE 06");
+		Categoria cat9 = new Categoria(null, "TESTE 07");
+		Categoria cat10 = new Categoria(null, "TESTE 08");
+		Categoria cat11 = new Categoria(null, "TESTE 09");
+		Categoria cat12 = new Categoria(null, "TESTE 10");
+		Categoria cat13 = new Categoria(null, "TESTE 11");
+		Categoria cat14 = new Categoria(null, "TESTE 12");
+		Categoria cat15 = new Categoria(null, "TESTE 13");
+		Categoria cat16 = new Categoria(null, "TESTE 14");
+		Categoria cat17 = new Categoria(null, "TESTE 15");
+
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
 		Produto p3 = new Produto(null, "Mouse", 45.00);
@@ -117,7 +153,7 @@ public class McApplication implements CommandLineRunner {
 		
 		
 		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10, cat11, cat12, cat13, cat14, cat15, cat16, cat17));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
