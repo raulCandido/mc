@@ -60,7 +60,7 @@ public class CategoriaService {
 		return repository.findAll(pageRequest);
 	}
 
-	public Categoria converterCategoriaDtoParaCategoria(CategoriaDTO categoriaDTO) {
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
 		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
 	}
 }
