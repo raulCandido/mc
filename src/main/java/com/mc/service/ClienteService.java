@@ -35,8 +35,15 @@ public class ClienteService {
 	}
 
 	public Cliente update(Cliente obj) {
-		find(obj.getId());
-		return repository.save(obj);
+		Cliente newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repository.save(newObj);
+	}
+
+	private void updateData(Cliente newObj, Cliente obj) {
+		
+		newObj.setNome(obj.getNome());
+		newObj.setEmail(obj.getEmail());
 	}
 
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String ordeBy, String direction) {
@@ -53,12 +60,12 @@ public class ClienteService {
 		try {
 			repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel  excluir uma cliente que tem produtos");
+			throw new DataIntegrityException("Não é possivel excluir um cliente que tem produtos");
 		}
 	}
 
 	public Cliente fromDTO(ClienteDTO objDTO) {
-		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail());
-	
+		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null, null);
+
 	}
 }

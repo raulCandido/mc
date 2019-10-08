@@ -17,6 +17,7 @@ public class ClienteDTO implements Serializable {
 	@NotEmpty(message = "{notEmpty}")
 	@Length(min = 5,max = 80, message = "{maxAndMinLength}" )
 	private String nome;
+	
 	@NotEmpty(message = "{notEmpty}")
 	@Email(message = "{emailInvalido}")
 	private String email;
