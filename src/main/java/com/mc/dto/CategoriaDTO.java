@@ -9,9 +9,9 @@ import com.mc.domain.Categoria;
 public class CategoriaDTO {
 
 	private Integer id;
-	
 	@NotEmpty(message = "{notEmpty}")
 	@Length(min = 10, max = 80, message = "{maxAndMinLength}")
+
 	private String nome;
 
 	public CategoriaDTO() {

@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mc.domain.Categoria;
-import com.mc.domain.Cliente;
 import com.mc.dto.CategoriaDTO;
-import com.mc.dto.ClienteDTO;
 import com.mc.service.CategoriaService;
 
 @RestController
@@ -60,13 +58,12 @@ public class CategoriaResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
-		Categoria obj = service.fromDTO(objDTO);
-		obj.setId(id);
-		obj = service.update(obj);
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id) {
+		Categoria categoria = service.fromDTO(categoriaDTO);
+		categoria.setId(id);
+		categoria = service.update(categoria);
 		return ResponseEntity.noContent().build();
 	}
-
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
