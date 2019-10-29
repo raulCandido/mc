@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.mc.domain.Categoria;
 import com.mc.domain.Cliente;
-import com.mc.dto.CategoriaDTO;
 import com.mc.dto.ClienteDTO;
 import com.mc.dto.ClienteNewDTO;
 import com.mc.service.ClienteService;
