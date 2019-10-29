@@ -120,8 +120,8 @@ public class McApplication implements CommandLineRunner {
 		Cliente cli1 = new Cliente(null, "Taina de Souza", "taina.souza@gmail.com", "06235715399", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("996515305","996515306"));
 		
-		Endereco end1 = new Endereco(null, "Rua Rita Barbosa Lima", 48, "Proximo a mercadinho serve bem", "Jardim Icarai", "61621390", cli1, cid2);
-		Endereco end2 = new Endereco(null, "Rua Marcelino de Oliveira", 04, "Proximo a Nordeste Emergencia", "Jardim Icarai", "61621070", cli1, cid2);
+		Endereco end1 = new Endereco(null, "Rua Rita Barbosa Lima","48", "Proximo a mercadinho serve bem", "Jardim Icarai", "61621390", cli1, cid2);
+		Endereco end2 = new Endereco(null, "Rua Marcelino de Oliveira", "04", "Proximo a Nordeste Emergencia", "Jardim Icarai", "61621070", cli1, cid2);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 		

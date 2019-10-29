@@ -7,6 +7,9 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.mc.service.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -27,7 +30,7 @@ public class ClienteNewDTO implements Serializable{
 	private String logradouro;
 	
 	@NotEmpty(message = "{notEmpty}")
-	private Integer numero;
+	private String numero;
 	private String complemento;
 	
 	@NotEmpty(message = "{notEmpty}")
@@ -85,11 +88,11 @@ public class ClienteNewDTO implements Serializable{
 		this.logradouro = logradouro;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
