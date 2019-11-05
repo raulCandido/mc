@@ -1,5 +1,8 @@
 package com.mc.resource;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,13 @@ public class ProdutoResource {
 		return ResponseEntity.ok(produto);
 
 	}
+
+	@GetMapping(value = "all")
+	public ResponseEntity<?> find() {
+		List<Produto> produtos = service.findall();
+		List<ProdutoDTO> listDTO = produtos.stream().map(produto -> new ProdutoDTO(produto)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDTO);
+	}
 	
 	@GetMapping()
 	public ResponseEntity<Page<ProdutoDTO>> findPage(
@@ -40,4 +50,5 @@ public class ProdutoResource {
 		Page<ProdutoDTO> listDTO = produtos.map(produto -> new ProdutoDTO(produto));
 		return ResponseEntity.ok(listDTO);
 	}
+	
 }
