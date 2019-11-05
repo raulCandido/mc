@@ -71,6 +71,7 @@ public class McApplication implements CommandLineRunner {
 		bean.setValidationMessageSource(messageSource());
 		return bean;
 	}
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(McApplication.class, args);
@@ -156,7 +157,7 @@ public class McApplication implements CommandLineRunner {
 		Pagamento pag1 = new PagamentoComCartao(null, ped1, EstadoPagamento.QUITADO, 6);
 		ped1.setPagamento(pag1);
 
-		Pagamento pag2 = new PagamentoComBoleto(null, ped2, EstadoPagamento.PENDETE, sdf.parse("20/10/2017 00:00"), null);
+		Pagamento pag2 = new PagamentoComBoleto(null, ped2, EstadoPagamento.PENDENTE, sdf.parse("20/10/2017 00:00"), null);
 		ped2.setPagamento(pag2);
 		
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));

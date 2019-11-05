@@ -2,6 +2,8 @@ package com.mc.dto;
 
 import java.io.Serializable;
 
+import com.mc.domain.Produto;
+
 public class ProdutoDTO implements Serializable {
 
 	/**
@@ -13,6 +15,12 @@ public class ProdutoDTO implements Serializable {
 	private Double preco;
 
 	public ProdutoDTO() {
+	}
+
+	public ProdutoDTO(Produto obj) {
+		this.id = obj.getId();
+		this.nome = obj.getNome();
+		this.preco = obj.getPreco();
 	}
 
 	public Integer getId() {

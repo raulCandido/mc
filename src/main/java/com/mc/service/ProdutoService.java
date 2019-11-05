@@ -32,7 +32,7 @@ public class ProdutoService {
 	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String ordeBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), ordeBy);
 		List<Categoria> categorias = categoriaRepository.findAllById(ids);
-		return repository.search(nome, categorias, pageRequest);
+		return repository.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);
 	}
 
 	public List<Produto> findall() {

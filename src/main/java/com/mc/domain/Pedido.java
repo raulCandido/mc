@@ -78,6 +78,14 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
+	
+	public double getValorTotal() {
+		double soma = 0.0;
+		for (ItemPedido itemPedido : itens) {
+			soma = soma + itemPedido.getSubTotal();
+		}
+		return soma;
+	}
 
 	public Integer getId() {
 		return id;

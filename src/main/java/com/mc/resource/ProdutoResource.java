@@ -1,7 +1,5 @@
 package com.mc.resource;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mc.domain.Categoria;
 import com.mc.domain.Produto;
-import com.mc.dto.CategoriaDTO;
 import com.mc.dto.ProdutoDTO;
 import com.mc.resource.utils.URL;
 import com.mc.service.ProdutoService;
