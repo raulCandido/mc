@@ -16,8 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mc.domain.enums.TipoCliente;
 
@@ -32,11 +30,9 @@ public class Cliente implements Serializable {
 	private String nome;
 	
 	@Column(unique = true)
-	@Length(max = 50)
 	private String email;
 	
 	@Column(unique = true)
-	@Length(max = 12)
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 
