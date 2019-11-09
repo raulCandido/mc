@@ -14,6 +14,7 @@ import com.mc.repository.ItemPedidoRepository;
 import com.mc.repository.PagamentoRepository;
 import com.mc.repository.PedidoRepository;
 import com.mc.service.exception.ObjectNotFoundException;
+import com.mc.util.UtilFormat;
 
 @Service
 public class PedidoService {
@@ -32,6 +33,9 @@ public class PedidoService {
 
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	private ClienteService clienteService;
 
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> obj = repository.findById(id);
@@ -41,6 +45,7 @@ public class PedidoService {
 	public Pedido insert(Pedido pedido) {
 		pedido.setId(null);
 		pedido.setInstance(new Date());
+		pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
 		pedido.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
 		pedido.getPagamento().setPedido(pedido);
 		if (pedido.getPagamento() instanceof PagamentoComBoleto) {
@@ -52,10 +57,13 @@ public class PedidoService {
 
 		for (ItemPedido itemPedido : pedido.getItens()) {
 			itemPedido.setDesconto(0.0);
-			itemPedido.setPreco(produtoService.buscar(itemPedido.getProduto().getId()).getPreco());
+			itemPedido.setProduto(produtoService.buscar(itemPedido.getProduto().getId()));
+			itemPedido.setPreco(itemPedido.getProduto().getPreco());
 			itemPedido.setPedido(pedido);
 		}
+		
 		itemPedidoRepository.saveAll(pedido.getItens());
+		System.out.println(pedido.toString());
 		return pedido;
 	}
 }
