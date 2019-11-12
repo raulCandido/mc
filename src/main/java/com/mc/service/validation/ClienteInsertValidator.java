@@ -20,9 +20,10 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 	@Autowired
 	private ClienteRepository repository;
 	
+	private static final String FIELDNAME = "cpfOuCnpj";
+	
 	@Override
 	public void initialize(ClienteInsert constraintAnnotation) {
-		// TODO Auto-generated method stub
 		ConstraintValidator.super.initialize(constraintAnnotation);
 	}
 
@@ -32,10 +33,12 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 		List<FieldMessage> list = new ArrayList<FieldMessage>();
 
 		if (value.getTipoCliente().equals(TipoCliente.PESSOAFISICA.getCodigo()) && !BR.isValidCPF(value.getCpfOuCnpj())) {
-			list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
+			
+			list.add(new FieldMessage(FIELDNAME, "CPF inválido"));
+			
 		}
 		if (value.getTipoCliente().equals(TipoCliente.PESSOAJURIDICA.getCodigo()) && !BR.isValidCNPJ(value.getCpfOuCnpj())) {
-			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
+			list.add(new FieldMessage(FIELDNAME, "CNPJ inválido"));
 		}
 		
 		Cliente cliente = repository.findByCpfOuCnpj(value.getCpfOuCnpj());
@@ -45,7 +48,7 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 				list.add(new FieldMessage("email", "Email: " +cliente.getEmail()+ " já cadastrado."));
 			}
 			if (cliente.getCpfOuCnpj() != null) {
-				list.add(new FieldMessage("cpfOuCnpj", "CPF/CNPJ já cadastrado."));
+				list.add(new FieldMessage(FIELDNAME, "CPF/CNPJ já cadastrado."));
 			}
 		}
 		

@@ -14,7 +14,6 @@ import com.mc.repository.ItemPedidoRepository;
 import com.mc.repository.PagamentoRepository;
 import com.mc.repository.PedidoRepository;
 import com.mc.service.exception.ObjectNotFoundException;
-import com.mc.util.UtilFormat;
 
 @Service
 public class PedidoService {
@@ -36,6 +35,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> obj = repository.findById(id);
@@ -63,7 +65,7 @@ public class PedidoService {
 		}
 		
 		itemPedidoRepository.saveAll(pedido.getItens());
-		System.out.println(pedido.toString());
+		emailService.sendOrderConfirmation(pedido);
 		return pedido;
 	}
 }

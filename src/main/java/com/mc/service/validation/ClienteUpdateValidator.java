@@ -26,15 +26,13 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 	
 	@Override
 	public void initialize(ClienteUpdate constraintAnnotation) {
-		// TODO Auto-generated method stub
 		ConstraintValidator.super.initialize(constraintAnnotation);
 	}
 
 	private Integer pegarUriId () {
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String> ) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-		Integer uriId = Integer.parseInt(map.get("id"));
-		return uriId;
+		return Integer.parseInt(map.get("id"));
 	}
 	
 	@Override
