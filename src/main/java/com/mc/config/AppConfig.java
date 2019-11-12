@@ -22,4 +22,20 @@ public class AppConfig {
 		bean.setValidationMessageSource(messageSource());
 		return bean;
 	}
+
+//	@Bean
+//	public SpringResourceTemplateResolver thymeleafTemplateResolver() {
+//		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+//		templateResolver.setPrefix("templates/");
+//		templateResolver.setSuffix(".html");
+//		templateResolver.setTemplateMode("HTML5");
+//		return templateResolver;
+//	}
+//
+//	@Bean
+//	public SpringTemplateEngine templateEngine() {
+//		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//		templateEngine.setTemplateResolver(thymeleafTemplateResolver());
+//		return templateEngine;
+//	}
 }
