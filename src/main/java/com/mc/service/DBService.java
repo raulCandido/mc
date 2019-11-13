@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mc.domain.Categoria;
@@ -19,6 +20,7 @@ import com.mc.domain.PagamentoComCartao;
 import com.mc.domain.Pedido;
 import com.mc.domain.Produto;
 import com.mc.domain.enums.EstadoPagamento;
+import com.mc.domain.enums.Perfil;
 import com.mc.domain.enums.TipoCliente;
 import com.mc.repository.CategoriaRepository;
 import com.mc.repository.CidadeRepository;
@@ -51,6 +53,8 @@ public class DBService {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	public void instantiateTestDataBase() throws ParseException {
 
@@ -117,11 +121,19 @@ public class DBService {
 		est1.getCidades().addAll(Arrays.asList(cid1));
 		est2.getCidades().addAll(Arrays.asList(cid2,cid3));
 		
-		Cliente cli1 = new Cliente(null, "Taina de Souza", "raulcanddev@gmail.com", "06235715399", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Taina de Souza", "raulcanddev@gmail.com", "06235715399", TipoCliente.PESSOAFISICA, encoder.encode("teste"));
 		cli1.getTelefones().addAll(Arrays.asList("996515305","996515306"));
+		
+		Cliente cli2 = new Cliente(null, "Raul Candido", "raulcand@hotmail.com", "83843439001", TipoCliente.PESSOAFISICA, encoder.encode("123"));
+		cli2.getTelefones().addAll(Arrays.asList("996515345","996515453"));
+		cli2.addPerfil(Perfil.ADMIN);
 		
 		Endereco end1 = new Endereco(null, "Rua Rita Barbosa Lima","48", "Proximo a mercadinho serve bem", "Jardim Icarai", "61621390", cli1, cid2);
 		Endereco end2 = new Endereco(null, "Rua Marcelino de Oliveira", "04", "Proximo a Nordeste Emergencia", "Jardim Icarai", "61621070", cli1, cid2);
+		
+		Endereco end3 = new Endereco(null, "Rua Marcelino de Oliveira", "04", "Proximo a Nordeste Emergencia", "Jardim Icarai", "61621070", cli2, cid2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 		
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 		
@@ -154,8 +166,8 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
 		
-		clienteRepository.save(cli1);
-		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		clienteRepository.saveAll(Arrays.asList(cli1,cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
 		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
