@@ -121,10 +121,10 @@ public class DBService {
 		est1.getCidades().addAll(Arrays.asList(cid1));
 		est2.getCidades().addAll(Arrays.asList(cid2,cid3));
 		
-		Cliente cli1 = new Cliente(null, "Taina de Souza", "raulcanddev@gmail.com", "06235715399", TipoCliente.PESSOAFISICA, encoder.encode("teste"));
+		Cliente cli1 = new Cliente(null, "Taina de Souza", "taina.souza@gmail.com", "06235715399", TipoCliente.PESSOAFISICA, encoder.encode("teste"));
 		cli1.getTelefones().addAll(Arrays.asList("996515305","996515306"));
 		
-		Cliente cli2 = new Cliente(null, "Raul Candido", "raulcand@hotmail.com", "83843439001", TipoCliente.PESSOAFISICA, encoder.encode("123"));
+		Cliente cli2 = new Cliente(null, "Raul Candido", "raul.cand@hotmail.com", "83843439001", TipoCliente.PESSOAFISICA, encoder.encode("123"));
 		cli2.getTelefones().addAll(Arrays.asList("996515345","996515453"));
 		cli2.addPerfil(Perfil.ADMIN);
 		

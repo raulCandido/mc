@@ -5,21 +5,26 @@ import java.io.Serializable;
 public class CredenciasDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private String userName;
+	
+	private String email;
 	private String senha;
+	
+	public CredenciasDTO() {
 
-	public CredenciasDTO(String userName, String senha) {
+	}
+
+	public CredenciasDTO(String email, String senha) {
 		super();
-		this.userName = userName;
+		this.email = email;
 		this.senha = senha;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
@@ -29,5 +34,7 @@ public class CredenciasDTO implements Serializable{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+
 
 }
