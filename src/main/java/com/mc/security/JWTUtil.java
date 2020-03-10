@@ -2,6 +2,7 @@ package com.mc.security;
 
 import java.util.Date;
 
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -28,16 +29,32 @@ public class JWTUtil {
 
 	public boolean tokenValido(String token) {
 		Claims claims = getClaims(token);
+		if (claims != null) {
+			String userName = claims.getSubject();
+			Date dataDeExpiracao = claims.getExpiration();
+			Date dataAgora = new Date(System.currentTimeMillis());
+			if (userName != null && dataDeExpiracao != null && dataAgora.before(dataDeExpiracao)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private Claims getClaims(String token) {
-		return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+		try {
+			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public String getUserName(String token) {
-		// TODO Auto-generated method stub
+		Claims claims = getClaims(token);
+		if (claims != null) {
+			return claims.getSubject();
+		}
 		return null;
+		
 	}
 }
 
