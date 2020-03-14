@@ -4,15 +4,23 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.mc.domain.Categoria;
+import com.mc.domain.Cliente;
 import com.mc.domain.ItemPedido;
 import com.mc.domain.PagamentoComBoleto;
 import com.mc.domain.Pedido;
 import com.mc.domain.enums.EstadoPagamento;
+import com.mc.repository.ClienteRepository;
 import com.mc.repository.ItemPedidoRepository;
 import com.mc.repository.PagamentoRepository;
 import com.mc.repository.PedidoRepository;
+import com.mc.security.UserSS;
+import com.mc.service.exception.AuthorizationException;
 import com.mc.service.exception.ObjectNotFoundException;
 
 @Service
@@ -32,16 +40,17 @@ public class PedidoService {
 
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired()
 	private EmailService emailService;
 
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado ID: " + id + ", Tipo: " + Pedido.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado ID: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
 	public Pedido insert(Pedido pedido) {
@@ -63,9 +72,21 @@ public class PedidoService {
 			itemPedido.setPreco(itemPedido.getProduto().getPreco());
 			itemPedido.setPedido(pedido);
 		}
-		
+
 		itemPedidoRepository.saveAll(pedido.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(pedido);
 		return pedido;
+	}
+
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String ordeBy, String direction) {
+
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado.");
+		}
+
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), ordeBy);
+		Cliente cliente = clienteService.find(user.getId());
+		return repository.findByCliente(cliente, pageRequest);
 	}
 }

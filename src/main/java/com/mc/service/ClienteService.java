@@ -16,11 +16,14 @@ import com.google.common.base.Strings;
 import com.mc.domain.Cidade;
 import com.mc.domain.Cliente;
 import com.mc.domain.Endereco;
+import com.mc.domain.enums.Perfil;
 import com.mc.domain.enums.TipoCliente;
 import com.mc.dto.ClienteDTO;
 import com.mc.dto.ClienteNewDTO;
 import com.mc.repository.ClienteRepository;
 import com.mc.repository.EnderecoRepository;
+import com.mc.security.UserSS;
+import com.mc.service.exception.AuthorizationException;
 import com.mc.service.exception.DataIntegrityException;
 import com.mc.service.exception.ObjectNotFoundException;
 
@@ -37,6 +40,13 @@ public class ClienteService {
 	private BCryptPasswordEncoder encoder;
 
 	public Cliente find(Integer id) {
+		
+		//validacao para conferir se usuario logado tem permissao para acesso a alguma informacao
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado ID: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
