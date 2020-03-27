@@ -1,5 +1,6 @@
 package com.mc.service;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,8 +12,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.base.Strings;
+import com.google.j2objc.annotations.AutoreleasePool;
 import com.mc.domain.Cidade;
 import com.mc.domain.Cliente;
 import com.mc.domain.Endereco;
@@ -26,6 +29,7 @@ import com.mc.security.UserSS;
 import com.mc.service.exception.AuthorizationException;
 import com.mc.service.exception.DataIntegrityException;
 import com.mc.service.exception.ObjectNotFoundException;
+import com.sun.mail.handlers.multipart_mixed;
 
 @Service
 public class ClienteService {
@@ -38,6 +42,9 @@ public class ClienteService {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	
+	@Autowired
+	private S3Service s3Service;
 
 	public Cliente find(Integer id) {
 		
@@ -102,5 +109,9 @@ public class ClienteService {
 			cliente.getTelefones().add(objDTO.getTelefone3());
 		}
 		return cliente;
+	}
+	
+	public URI uploadFilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 }
