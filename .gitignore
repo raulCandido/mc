@@ -29,3 +29,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### Spring Boot ###
+
+*.properties
