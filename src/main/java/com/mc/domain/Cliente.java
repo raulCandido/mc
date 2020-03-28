@@ -56,7 +56,7 @@ public class Cliente implements Serializable {
 
 	@JsonIgnore
 	private String senha;
-
+	
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente, String senha) {
 		super();
 		addPerfil(Perfil.CLIENTE);
@@ -183,4 +183,6 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
+
+
 }
