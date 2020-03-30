@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -24,6 +25,7 @@ public class ClienteNewDTO implements Serializable {
 
 	@NotEmpty(message = "{notEmpty}")
 	private String cpfOuCnpj;
+	
 	private Integer tipoCliente;
 
 	@NotEmpty(message = "{notEmpty}")
@@ -31,6 +33,7 @@ public class ClienteNewDTO implements Serializable {
 
 	@NotEmpty(message = "{notEmpty}")
 	private String numero;
+	
 	private String complemento;
 
 	@NotEmpty(message = "{notEmpty}")
@@ -44,9 +47,13 @@ public class ClienteNewDTO implements Serializable {
 
 	@NotEmpty(message = "{notEmpty}")
 	private String telefone1;
+
+	@NotNull(message = "{notEmpty}")
+	private Integer cidadeId;
+	
 	private String telefone2;
 	private String telefone3;
-	private Integer cidadeId;
+	
 
 	public ClienteNewDTO() {
 	}

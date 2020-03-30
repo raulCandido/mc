@@ -51,6 +51,9 @@ public class ClienteService {
 
 	@Value("${img.prefix.client.profile}")
 	private String prefixImage;
+	
+	@Value("${img.profile.size}")
+	private Integer imageSize;
 
 	public Cliente find(Integer id) {
 
@@ -112,11 +115,9 @@ public class ClienteService {
 	}
 
 	public Cliente fromDTO(ClienteNewDTO objDTO) {
-		Cliente cliente = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(),
-				TipoCliente.toEnum(objDTO.getTipoCliente()), encoder.encode(objDTO.getSenha()));
+		Cliente cliente = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), TipoCliente.toEnum(objDTO.getTipoCliente()), encoder.encode(objDTO.getSenha()));
 		Cidade cidade = new Cidade(objDTO.getCidadeId(), null, null);
-		Endereco endereco = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(),
-				objDTO.getBairro(), objDTO.getCep(), cliente, cidade);
+		Endereco endereco = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(),	objDTO.getBairro(), objDTO.getCep(), cliente, cidade);
 		cliente.getEnderecos().add(endereco);
 		cliente.getTelefones().add(objDTO.getTelefone1());
 		if (!Strings.isNullOrEmpty(objDTO.getTelefone2())) {
@@ -136,6 +137,8 @@ public class ClienteService {
 		}
 
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, imageSize);
 		String fileName = prefixImage + user.getId() + ".jpg";
 
 		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg"), "image");
