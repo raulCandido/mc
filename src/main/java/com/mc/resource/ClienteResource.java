@@ -34,18 +34,16 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService service;
 
-	@GetMapping(value = "/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		Cliente cliente = service.find(id);
 		return ResponseEntity.ok(cliente);
 	}
-
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO, @PathVariable Integer id) {
-		Cliente cliente = service.fromDTO(objDTO);
-		cliente.setId(id);
-		cliente = service.update(cliente);
-		return ResponseEntity.noContent().build();
+	
+	@GetMapping(value = "/email")
+	public ResponseEntity<Cliente> findByEmail(@RequestParam(value = "value") String email) {
+		Cliente cliente = service.findClientePorEmail(email);
+		return ResponseEntity.ok().body(cliente);
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN')")
@@ -53,9 +51,6 @@ public class ClienteResource {
 	public ResponseEntity<List<ClienteDTO>> findall() {
 		List<Cliente> clientes = service.findall();
 		List<ClienteDTO> listDTO = clientes.stream().map(cliente -> new ClienteDTO(cliente)).collect(Collectors.toList());
-//		for (Cliente cliente : clientes) {
-//			listDTO.add(new ClienteDTO(cliente));
-//		}
 		return ResponseEntity.ok(listDTO);
 	}
 
@@ -68,6 +63,14 @@ public class ClienteResource {
 		Page<Cliente> clientes = service.findPage(page, linesPerPage, ordeBy, direction);
 		Page<ClienteDTO> listDTO = clientes.map(cliente -> new ClienteDTO(cliente));
 		return ResponseEntity.ok(listDTO);
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO, @PathVariable Integer id) {
+		Cliente cliente = service.fromDTO(objDTO);
+		cliente.setId(id);
+		service.update(cliente);
+		return ResponseEntity.noContent().build();
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN')")

@@ -65,8 +65,7 @@ public class ClienteService {
 		}
 
 		Optional<Cliente> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado ID: " + id + ", Tipo: " + Cliente.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado ID: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 	public Cliente pesquisarClientePorCodigo(Integer id) {
@@ -98,6 +97,18 @@ public class ClienteService {
 
 	public List<Cliente> findall() {
 		return repository.findAll();
+	}
+	
+	public Cliente findClientePorEmail(String email) {
+		UserSS userSS = UserService.authenticated();
+		if(userSS == null || !userSS.hasRole(Perfil.ADMIN) && !email.equals(userSS.getUsername())) {
+			throw new AuthorizationException("Acesso negado.");
+		}
+		Cliente obj = repository.findByEmail(email);
+		if(obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado ID: " + userSS.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return obj;
 	}
 
 	public void delete(Integer id) {
