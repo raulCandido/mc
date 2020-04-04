@@ -38,7 +38,7 @@ public class CategoriaResource {
 		Categoria categoria = service.find(id);
 		return ResponseEntity.ok(categoria);
 	}
-
+	//retorna todos os clientes
 	@GetMapping()
 	public ResponseEntity<List<CategoriaDTO>> findall() {
 		List<Categoria> categorias = service.findall();
