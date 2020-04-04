@@ -58,7 +58,6 @@ public class ClienteService {
 	public Cliente find(Integer id) {
 
 		// validacao para conferir se usuario logado tem permissao para acesso a alguma
-		// informacao
 		UserSS user = UserService.authenticated();
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");

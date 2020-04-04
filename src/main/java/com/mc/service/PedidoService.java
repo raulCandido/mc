@@ -9,13 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.mc.domain.Categoria;
 import com.mc.domain.Cliente;
 import com.mc.domain.ItemPedido;
 import com.mc.domain.PagamentoComBoleto;
 import com.mc.domain.Pedido;
 import com.mc.domain.enums.EstadoPagamento;
-import com.mc.repository.ClienteRepository;
 import com.mc.repository.ItemPedidoRepository;
 import com.mc.repository.PagamentoRepository;
 import com.mc.repository.PedidoRepository;
