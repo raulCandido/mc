@@ -37,8 +37,9 @@ public class Cliente implements Serializable {
 
 	@Column(unique = true)
 	private String cpfOuCnpj;
+	
 	private Integer tipoCliente;
-
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 
