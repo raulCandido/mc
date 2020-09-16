@@ -1,5 +1,7 @@
 package com.mc.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.mc.security.JWTAuthenticationFilter;
 import com.mc.security.JWTAuthorizationFilter;
 import com.mc.security.JWTUtil;
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -63,8 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	CorsConfigurationSource corsConfiguration() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("**/", new CorsConfiguration().applyPermitDefaultValues());
+		source.registerCorsConfiguration("**/", configuration);
 		return source;
 	}
 	
