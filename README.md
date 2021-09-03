@@ -7,4 +7,5 @@ Projeto com intuito de aplicar conhecimentos criando API RESTful, com as seguint
 - swagger
 - docker
 
+### Deployed in: https://application-mc.herokuapp.com/categorias
 
